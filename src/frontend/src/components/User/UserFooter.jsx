@@ -23,12 +23,10 @@ const UserFooter = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <div className="h-16 w-16 rounded-full bg-white border border-white/30 flex items-center justify-center shrink-0 overflow-hidden p-1.5 shadow-lg shadow-black/10">
-                <img src={logoDHTV} alt="Logo trường" className="h-full w-full object-contain" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold leading-tight">MAP Citrus</h3>
-              </div>
+              <Link to="/user" className="flex items-center gap-2 h-16">
+                <div className="text-5xl font-bold text-white"><FaSeedling /></div>
+                <div className="font-bold text-3xl text-white">MAP Citrus</div>
+              </Link>
             </div>
             <p className="text-white/85 leading-relaxed max-w-sm">
               Hệ thống quản lý vườn cây và hỗ trợ dự đoán một số bệnh trên cây có múi.
