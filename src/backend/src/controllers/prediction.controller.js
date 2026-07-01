@@ -649,7 +649,7 @@ const getAdviceForSelectedDiseases = async (req, res) => {
 const deletePrediction = async (req, res) => {
   try {
     console.log(`\n🔍 DELETE REQUEST - ID: ${req.params.id}, User: ${req.userId}`);
-    
+
     const prediction = await Prediction.findById(req.params.id);
 
     if (!prediction) {
@@ -660,14 +660,14 @@ const deletePrediction = async (req, res) => {
       });
     }
 
-    console.log(`✓ Found prediction`);
-    console.log(`  - prediction.user_id: ${prediction.user_id} (type: ${typeof prediction.user_id})`);
-    console.log(`  - req.userId: ${req.userId} (type: ${typeof req.userId})`);
-    console.log(`  - prediction.user_id.toString(): ${prediction.user_id.toString()}`);
-    console.log(`  - Match: ${prediction.user_id.toString() === req.userId}`);
+    const User = require('../models/User');
+    const currentUser = await User.findById(req.userId).select('vai_tro');
 
-    // Kiểm tra quyền
-    if (prediction.user_id.toString() !== req.userId) {
+    // Kiểm tra quyền: chủ dự đoán hoặc admin
+    const isOwner = prediction.user_id.toString() === req.userId;
+    const isAdmin = currentUser?.vai_tro === 'admin';
+
+    if (!isOwner && !isAdmin) {
       console.log(`❌ Permission denied - user mismatch`);
       return res.status(403).json({
         success: false,

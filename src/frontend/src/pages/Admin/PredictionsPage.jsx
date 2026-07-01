@@ -70,6 +70,7 @@ const buildConfidenceBuckets = (predictions) => {
 const PredictionsPage = () => {
   const [predictions, setPredictions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deletingPredictionId, setDeletingPredictionId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPrediction, setSelectedPrediction] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -155,6 +156,28 @@ const PredictionsPage = () => {
     if (!gradCamPath) return '';
     if (gradCamPath.startsWith('http')) return gradCamPath;
     return `http://localhost:5000${gradCamPath}`;
+  };
+
+  const handleDeletePrediction = async () => {
+    if (!selectedPrediction?._id) return;
+
+    const confirmed = window.confirm('Bạn có chắc muốn xóa dự đoán này không?');
+    if (!confirmed) return;
+
+    try {
+      setDeletingPredictionId(selectedPrediction._id);
+      await apiClient.delete(`/predictions/${selectedPrediction._id}`);
+      toast.success('Xóa dự đoán thành công');
+      setSelectedPrediction(null);
+      setPredictions((currentPredictions) =>
+        currentPredictions.filter((prediction) => prediction._id !== selectedPrediction._id)
+      );
+    } catch (error) {
+      console.error('Error deleting prediction:', error);
+      toast.error(error.response?.data?.message || 'Không thể xóa dự đoán');
+    } finally {
+      setDeletingPredictionId(null);
+    }
   };
 
   // Reset to page 1 when search term changes
@@ -398,12 +421,21 @@ const PredictionsPage = () => {
 
                 {/* Footer */}
                 <div className="border-t p-4 flex-shrink-0">
-                  <button
-                    onClick={() => setSelectedPrediction(null)}
-                    className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium flex items-center justify-center gap-2"
-                  >
-                    <FaTimes /> Đóng
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleDeletePrediction}
+                      disabled={deletingPredictionId === selectedPrediction._id}
+                      className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {deletingPredictionId === selectedPrediction._id ? 'Đang xóa...' : 'Xóa dự đoán'}
+                    </button>
+                    <button
+                      onClick={() => setSelectedPrediction(null)}
+                      className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium flex items-center justify-center gap-2"
+                    >
+                      <FaTimes /> Đóng
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
