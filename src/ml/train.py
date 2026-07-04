@@ -62,6 +62,9 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # Nguồn dữ liệu chuẩn hóa cho training
 BACKEND_PATH = SCRIPT_DIR.parent / "backend"
 DATASET_SOURCE_DIR = SCRIPT_DIR / "datasets"
+DATASET_DIR = DATASET_SOURCE_DIR
+GOP_DATASET_DIR = SCRIPT_DIR / "gop_dataset"
+ORGANIZED_DATASET_DIR = SCRIPT_DIR / "organized_dataset"
 TRAINING_IMAGES_DIR = BACKEND_PATH / "uploads" / "training"
 MODEL_PATH = "model.h5"
 LABEL_FILE = "disease_labels.json"
