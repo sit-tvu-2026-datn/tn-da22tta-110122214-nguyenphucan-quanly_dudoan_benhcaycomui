@@ -743,7 +743,7 @@ const ExpensesPage = () => {
                 const isCurrent = season.trang_thai === 'Đang diễn ra';
                 return (
                   <option key={season._id} value={season._id}>
-                    {isCurrent ? '🟢' : '🔴'} {season.ten_mua_vu} ({season.nam})
+                    {isCurrent} {season.ten_mua_vu} ({season.nam})
                   </option>
                 );
               })
@@ -761,7 +761,7 @@ const ExpensesPage = () => {
             <div className="p-8 text-center text-gray-600">
               {expenses.length === 0 ? (
                 <>
-                  <p className="mb-4">💰 Chưa ghi nhận chi phí nào</p>
+                  <p className="mb-4">Chưa ghi nhận chi phí nào</p>
                   <button
                     onClick={() => {
                       setEditingId(null);

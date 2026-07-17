@@ -570,7 +570,7 @@ const LogsPage = () => {
                 const isCurrent = season.trang_thai === 'Đang diễn ra';
                 return (
                   <option key={season._id} value={season._id}>
-                    {isCurrent ? '🟢' : '🔴'} {season.ten_mua_vu} ({season.nam})
+                    {isCurrent} {season.ten_mua_vu} ({season.nam})
                   </option>
                 );
               })

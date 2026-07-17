@@ -78,7 +78,7 @@ const ProfilePage = () => {
   return (
     <UserLayout>
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-2">
+        <h1 className="text-3xl font-bold text-green-600 mb-8 flex items-center gap-2">
           <FaUser /> Hồ sơ cá nhân
         </h1>
 
@@ -101,8 +101,8 @@ const ProfilePage = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Update Profile Form */}
             <div className="bg-white rounded-xl shadow-md p-6">
-              <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <FaUser className="text-blue-600" /> Cập nhập thông tin
+              <h3 className="font-bold text-green-600 mb-4 flex items-center gap-2">
+                <FaUser className="text-green-600" /> Cập nhập thông tin
               </h3>
               <form onSubmit={handleUpdateProfile} className="space-y-4">
                 <div>
@@ -145,8 +145,8 @@ const ProfilePage = () => {
 
             {/* Change Password Form */}
             <div className="bg-white rounded-xl shadow-md p-6">
-              <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <FaLock className="text-red-600" /> Đổi mật khẩu
+              <h3 className="font-bold text-green-600 mb-4 flex items-center gap-2">
+                <FaLock className="text-green-600" /> Đổi mật khẩu
               </h3>
               <form onSubmit={handleChangePassword} className="space-y-4">
                 <div>

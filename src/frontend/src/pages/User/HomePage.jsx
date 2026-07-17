@@ -35,6 +35,8 @@ const HomePage = () => {
     predictions: 0,
     expenses: 0,
   });
+  const [gardens, setGardens] = useState([]);
+  const [selectedGardenId, setSelectedGardenId] = useState('');
   const [recentData, setRecentData] = useState({
     logs: [],
     predictions: [],
@@ -149,6 +151,11 @@ const HomePage = () => {
         expenses: userExpenses.reduce((sum, e) => sum + (e.so_tien || 0), 0),
       });
 
+      setGardens(userGardens);
+      if (userGardens.length > 0) {
+        setSelectedGardenId((currentValue) => currentValue || String(userGardens[0]._id));
+      }
+
       setAllExpenses(userExpenses);
       setAllPredictions(userPredictions);
       setAllLogs(userLogs);
@@ -193,11 +200,15 @@ const HomePage = () => {
       toast.error('Vui lòng chọn ảnh');
       return;
     }
+    if (!selectedGardenId) {
+      toast.error('Vui lòng chọn vườn');
+      return;
+    }
     try {
       setPredicting(true);
       const formData = new FormData();
       formData.append('image', image);
-      // garden_id removed from prediction
+      formData.append('garden_id', selectedGardenId);
 
       const res = await apiClient.post('/predictions/predict', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -459,6 +470,22 @@ const HomePage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <form onSubmit={handlePredict} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Chọn vườn</label>
+                    <select
+                      value={selectedGardenId}
+                      onChange={(e) => setSelectedGardenId(e.target.value)}
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      <option value="">-- Chọn vườn để dự đoán --</option>
+                      {gardens.map((garden) => (
+                        <option key={garden._id} value={garden._id}>
+                          {garden.ten_vuon}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">Tải ảnh lá cây</label>
                     <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center cursor-pointer hover:border-green-500 transition bg-gray-50/60">
@@ -749,7 +776,7 @@ const HomePage = () => {
                   ) : (
                     seasonOptions.map((season) => (
                       <option key={season._id} value={season._id}>
-                        {season.trang_thai === 'Đang diễn ra' ? '🟢' : '🔴'} {season.ten_mua_vu} ({season.nam})
+                        {season.trang_thai === 'Đang diễn ra'} {season.ten_mua_vu} ({season.nam})
                       </option>
                     ))
                   )}
@@ -784,7 +811,7 @@ const HomePage = () => {
                   ) : (
                     seasonOptions.map((season) => (
                       <option key={season._id} value={season._id}>
-                        {season.trang_thai === 'Đang diễn ra' ? '🟢' : '🔴'} {season.ten_mua_vu} ({season.nam})
+                        {season.trang_thai === 'Đang diễn ra'} {season.ten_mua_vu} ({season.nam})
                       </option>
                     ))
                   )}
@@ -823,7 +850,7 @@ const HomePage = () => {
                   ) : (
                     seasonOptions.map((season) => (
                       <option key={season._id} value={season._id}>
-                        {season.trang_thai === 'Đang diễn ra' ? '🟢' : '🔴'} {season.ten_mua_vu} ({season.nam})
+                        {season.trang_thai === 'Đang diễn ra'} {season.ten_mua_vu} ({season.nam})
                       </option>
                     ))
                   )}
@@ -858,7 +885,7 @@ const HomePage = () => {
                   ) : (
                     seasonOptions.map((season) => (
                       <option key={season._id} value={season._id}>
-                        {season.trang_thai === 'Đang diễn ra' ? '🟢' : '🔴'} {season.ten_mua_vu} ({season.nam})
+                        {season.trang_thai === 'Đang diễn ra'} {season.ten_mua_vu} ({season.nam})
                       </option>
                     ))
                   )}

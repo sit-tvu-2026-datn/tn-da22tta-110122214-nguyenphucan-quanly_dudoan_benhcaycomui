@@ -6,6 +6,11 @@ const predictionSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Vui lòng chỉ định người dùng'],
   },
+  garden_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Garden',
+    default: null,
+  },
   hinh_anh: {
     type: String,
     required: [true, 'Vui lòng upload hình ảnh'],
@@ -47,6 +52,6 @@ const predictionSchema = new mongoose.Schema({
 });
 
 // Index để tìm kiếm nhanh
-predictionSchema.index({ user_id: 1, ngay_du_doan: -1 });
+predictionSchema.index({ user_id: 1, garden_id: 1, ngay_du_doan: -1 });
 
 module.exports = mongoose.model('Prediction', predictionSchema);

@@ -287,7 +287,7 @@ const StatisticsPage = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm">Tổng chi phí</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">{(stats.totalExpenses / 1000000).toFixed(2)}M ₫</p>
+                <p className="text-2xl font-bold text-green-600 mt-2">{(stats.totalExpenses / 1000000).toFixed(2)}M ₫</p>
               </div>
               <div className="text-3xl text-slate-900/20"><FaDollarSign /></div>
             </div>
@@ -296,7 +296,7 @@ const StatisticsPage = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm">Dự đoán</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">{stats.predictions.length}</p>
+                <p className="text-2xl font-bold text-green-600 mt-2">{stats.predictions.length}</p>
               </div>
               <div className="text-3xl text-blue-600/20"><FaChartBar /></div>
             </div>
@@ -305,7 +305,7 @@ const StatisticsPage = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm">Bệnh phổ biến</p>
-                <p className="text-lg font-bold text-gray-900 mt-2">{stats.mostCommonDisease?.name || 'N/A'}</p>
+                <p className="text-lg font-bold text-green-600 mt-2">{stats.mostCommonDisease?.name || 'N/A'}</p>
               </div>
               <div className="text-3xl text-rose-600/20">🦠</div>
             </div>
@@ -314,7 +314,7 @@ const StatisticsPage = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm">Số vườn</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">{stats.gardens.length}</p>
+                <p className="text-2xl font-bold text-green-600 mt-2">{stats.gardens.length}</p>
               </div>
               <div className="text-3xl text-emerald-600/20"><FaLeaf /></div>
             </div>
@@ -323,7 +323,7 @@ const StatisticsPage = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 text-sm">Nhật ký</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2">{stats.logs.length}</p>
+                <p className="text-2xl font-bold text-green-600 mt-2">{stats.logs.length}</p>
               </div>
               <div className="text-3xl text-violet-600/20"><FaFileAlt /></div>
             </div>
@@ -335,8 +335,8 @@ const StatisticsPage = () => {
           <div className="xl:col-span-2 bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between gap-3 mb-4">
               <div>
-                <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                  <FaChartLine className="text-blue-600" /> Xu hướng dự đoán theo ngày
+                <h3 className="font-bold text-green-600 flex items-center gap-2">
+                  <FaChartLine className="text-green-600" /> Xu hướng dự đoán theo ngày
                 </h3>
                 <p className="text-sm text-gray-500">Nhìn nhanh mức độ hoạt động gần đây</p>
               </div>
@@ -360,8 +360,8 @@ const StatisticsPage = () => {
           </div>
 
           <div className="bg-white rounded-xl shadow-md p-6">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FaClock className="text-emerald-600" /> Chỉ số nhanh
+            <h3 className="font-bold text-green-600 mb-4 flex items-center gap-2">
+              <FaClock className="text-green-600" /> Chỉ số nhanh
             </h3>
             <div className="space-y-4">
               <div className="rounded-xl bg-slate-50 p-4 border border-slate-200">
@@ -385,8 +385,8 @@ const StatisticsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Disease Statistics - Pie Chart */}
           <div className="bg-white rounded-xl shadow-md p-6">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FaVirus className="text-rose-600" /> Bệnh phát hiện
+            <h3 className="font-bold text-green-600 mb-4 flex items-center gap-2">
+              <FaVirus className="text-green-600" /> Bệnh phát hiện
             </h3>
 
             {stats.diseaseList.length === 0 ? (
@@ -415,8 +415,8 @@ const StatisticsPage = () => {
 
           {/* Expense by Type - Bar Chart */}
           <div className="bg-white rounded-xl shadow-md p-6">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FaDollarSign className="text-blue-600" /> Chi phí theo loại
+            <h3 className="font-bold text-green-600 mb-4 flex items-center gap-2">
+              <FaDollarSign className="text-green-600" /> Chi phí theo loại
             </h3>
 
             {Object.keys(stats.expensesByType).length === 0 ? (
@@ -456,8 +456,8 @@ const StatisticsPage = () => {
         {/* Prediction Details - 3 Most Recent Predictions */}
         {stats.predictions.length > 0 && (
           <div className="mt-6 bg-white rounded-xl shadow-md p-6">
-            <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <FaClipboardList className="text-blue-600" /> 3 dự đoán bệnh gần nhất
+            <h3 className="font-bold text-green-600 mb-4 flex items-center gap-2">
+              <FaClipboardList className="text-green-600" /> 3 dự đoán bệnh gần nhất
             </h3>
 
             {stats.predictions.length === 0 ? (

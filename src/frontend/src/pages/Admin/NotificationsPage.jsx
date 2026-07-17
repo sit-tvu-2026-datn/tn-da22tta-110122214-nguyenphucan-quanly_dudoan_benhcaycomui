@@ -824,7 +824,7 @@ const NotificationsPage = () => {
                         disabled={sendingReminder || controlDetail.pending.length === 0 || Boolean(controlDetail.recent_reminder)}
                         className="inline-flex items-center gap-2 rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-700 disabled:cursor-not-allowed disabled:bg-gray-300"
                       >
-                        {sendingReminder ? 'Đang gửi...' : 'Nhắc nhở các user chưa làm'}
+                        {sendingReminder ? 'Đang gửi...' : 'Nhắc nhở các chủ vườn chưa làm'}
                       </button>
                     </div>
                   </div>

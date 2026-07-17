@@ -287,7 +287,7 @@ const PredictionsPage = () => {
                   <thead className="bg-gray-50 border-b">
                     <tr>
                       <th className="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase">
-                        Người Dùng
+                        Tên Vườn
                       </th>
                       <th className="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase">
                         Bệnh
@@ -313,7 +313,7 @@ const PredictionsPage = () => {
                       >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="text-gray-900">
-                            {pred.user_id?.ho_ten || 'Unknown'}
+                            {pred.garden_id?.ten_vuon || 'Chưa gắn vườn'}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

@@ -246,7 +246,40 @@ const uploadPrediction = async (req, res) => {
 
     const CONFIDENCE_THRESHOLD = 0.80; // 80% trở lên mới lưu vào database
 
-    // NOTE: garden_id removed - prediction is tied to user only
+    const gardenId = String(req.body.garden_id || '').trim();
+    if (!gardenId) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error('Lỗi xóa file:', err);
+      });
+
+      return res.status(400).json({
+        success: false,
+        message: 'Vui lòng chọn vườn trước khi dự đoán',
+      });
+    }
+
+    const garden = await Garden.findById(gardenId);
+    if (!garden) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error('Lỗi xóa file:', err);
+      });
+
+      return res.status(404).json({
+        success: false,
+        message: 'Vườn không tồn tại',
+      });
+    }
+
+    if (String(garden.user_id) !== String(req.userId)) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error('Lỗi xóa file:', err);
+      });
+
+      return res.status(403).json({
+        success: false,
+        message: 'Bạn không có quyền dùng vườn này để dự đoán',
+      });
+    }
 
     console.log(`\n📤 Gửi ảnh sang ML API: ${ML_API_URL}`);
 
@@ -425,6 +458,7 @@ const uploadPrediction = async (req, res) => {
     // ✓ 6. Tạo prediction trong database (lưu bệnh chính + tư vấn)
     const prediction = new Prediction({
       user_id: req.userId,
+      garden_id: garden._id,
       hinh_anh,
       ket_qua_benh: mainDisease.ten_benh,  // Tên bệnh tiếng Việt từ bệnh chính
       do_tin_cay: Math.round(mainPrediction.confidence * 100),  // Convert 0-1 → 0-100
@@ -446,6 +480,8 @@ const uploadPrediction = async (req, res) => {
       message: 'Dự đoán thành công',
       data: {
         id: prediction._id,
+        garden_id: garden._id,
+        garden_name: garden.ten_vuon,
         main_disease: mainDisease.ten_benh,
         confidence: mainPrediction.confidence,
         
@@ -493,6 +529,7 @@ const uploadPrediction = async (req, res) => {
 const getPredictionsByUser = async (req, res) => {
   try {
       const predictions = await Prediction.find({ user_id: req.userId })
+        .populate('garden_id', 'ten_vuon season_id')
         .sort({ ngay_du_doan: -1 });
 
     console.log('✓ Lấy danh sách dự đoán:', predictions.length);
@@ -514,7 +551,7 @@ const getPredictionsByUser = async (req, res) => {
 // Lấy chi tiết 1 dự đoán
 const getPredictionById = async (req, res) => {
   try {
-    const prediction = await Prediction.findById(req.params.id);
+    const prediction = await Prediction.findById(req.params.id).populate('garden_id', 'ten_vuon season_id');
 
     if (!prediction) {
       return res.status(404).json({
@@ -721,6 +758,7 @@ const getAllPredictions = async (req, res) => {
     // Lấy tất cả predictions, populate user và garden info
     const predictions = await Prediction.find()
       .populate('user_id', 'ho_ten email vai_tro')
+      .populate('garden_id', 'ten_vuon')
       .sort({ ngay_du_doan: -1 })
       .limit(100);
 
